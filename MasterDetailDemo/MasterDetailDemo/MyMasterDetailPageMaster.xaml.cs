@@ -23,6 +23,9 @@ namespace MasterDetailDemo
 
             BindingContext = new MyMasterDetailPageMasterViewModel();
             ListView = MenuItemsListView;
+
+            //Icon = "redDis.png";
+            //Title = "";
         }
 
         class MyMasterDetailPageMasterViewModel : INotifyPropertyChanged

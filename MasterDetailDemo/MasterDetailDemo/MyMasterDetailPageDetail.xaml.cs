@@ -15,6 +15,8 @@ namespace MasterDetailDemo
         public MyMasterDetailPageDetail()
         {
             InitializeComponent();
+
+            
         }
     }
 }

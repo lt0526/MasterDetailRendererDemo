@@ -234,23 +234,23 @@ namespace MdpRight.iOS
 				MessagingCenter.Send<IVisualElementRenderer>(this, "Xamarin.UpdateToolbarButtons");
 		}
 
-		void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
-		{
-			if(e.PropertyName == "Master" || e.PropertyName == "Detail")
-				UpdateMasterDetailContainers();
-			else if(e.PropertyName == MasterDetailPage.IsPresentedProperty.PropertyName)
-				Presented = ((MasterDetailPage)Element).IsPresented;
-			else if(e.PropertyName == MasterDetailPage.IsGestureEnabledProperty.PropertyName)
-				UpdatePanGesture();
-			else if(e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
-				UpdateBackground();
-			else if(e.PropertyName == Page.BackgroundImageProperty.PropertyName)
-				UpdateBackground();
-            else if(e.PropertyName == "WidthRatio")
-            {
-                widthRatio = ((MyMasterDetailPage)Element).WidthRatio;
-            }
-		}
+void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
+{
+	if(e.PropertyName == "Master" || e.PropertyName == "Detail")
+		UpdateMasterDetailContainers();
+	else if(e.PropertyName == MasterDetailPage.IsPresentedProperty.PropertyName)
+		Presented = ((MasterDetailPage)Element).IsPresented;
+	else if(e.PropertyName == MasterDetailPage.IsGestureEnabledProperty.PropertyName)
+		UpdatePanGesture();
+	else if(e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
+		UpdateBackground();
+	else if(e.PropertyName == Page.BackgroundImageProperty.PropertyName)
+		UpdateBackground();
+    else if(e.PropertyName == "WidthRatio")
+    {
+        widthRatio = ((MyMasterDetailPage)Element).WidthRatio;
+    }
+}
 
 		void LayoutChildren(bool animated)
 		{
@@ -265,6 +265,7 @@ namespace MdpRight.iOS
 
             if (Presented)
                 target.X += masterFrame.Width;
+
 
             if (animated)
 			{
@@ -367,30 +368,30 @@ namespace MdpRight.iOS
 					var currentPosition = g.LocationInView(g.View);
 					var motion = currentPosition.X - center.X;
 					var detailView = _detailController.View;
-					var targetFrame = detailView.Frame;					
+					var targetFrame = detailView.Frame;
 
-					if(Presented)
-						targetFrame.X = (nfloat)Math.Min(0, -_masterController.View.Frame.Width + Math.Max(0, motion));
-					else
-						targetFrame.X = (nfloat)Math.Max(-_masterController.View.Frame.Width, Math.Min(0, motion));
-					
-					detailView.Frame = targetFrame;
+                        if (Presented)
+                            targetFrame.X = (nfloat)Math.Max(0, _masterController.View.Frame.Width + Math.Min(0, motion));
+                        else
+                            targetFrame.X = (nfloat)Math.Min(_masterController.View.Frame.Width, Math.Max(0, motion));
+
+                        detailView.Frame = targetFrame;
 					break;
 				case UIGestureRecognizerState.Ended:
 					var detailFrame = _detailController.View.Frame;
 					var masterFrame = _masterController.View.Frame;
 					if(Presented)
 					{
-						
-						if(detailFrame.X > -masterFrame.Width * .75)
-							Presented = false;
-						else
-							LayoutChildren(true);
-					}
-					else
+
+                        if (detailFrame.X < masterFrame.Width * .75)
+                            Presented = false;
+                        else
+                            LayoutChildren(true);
+                    }
+                    else
 					{
 						
-						if(detailFrame.X < -masterFrame.Width * .25)
+						if(detailFrame.X > masterFrame.Width * .25)
 							Presented = true;
 						else
 							LayoutChildren(true);

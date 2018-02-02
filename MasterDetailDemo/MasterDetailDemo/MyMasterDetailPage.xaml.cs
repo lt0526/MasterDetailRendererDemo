@@ -12,7 +12,6 @@ namespace MasterDetailDemo
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MyMasterDetailPage : MasterDetailPage
     {
-
         public readonly static BindableProperty WidthRatioProperty =
                     BindableProperty.Create("WidthRatio",
                     typeof(float),
@@ -30,7 +29,6 @@ namespace MasterDetailDemo
                 SetValue(WidthRatioProperty, value);
             }
         }
-
         public MyMasterDetailPage()
         {
             InitializeComponent();
